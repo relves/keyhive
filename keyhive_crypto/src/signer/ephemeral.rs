@@ -49,7 +49,7 @@ impl EphemeralSigner {
     /// ```
     pub fn with_signer<T, R: rand::CryptoRng + rand::RngCore>(
         csprng: &mut R,
-        f: impl FnOnce(ed25519_dalek::VerifyingKey, Box<dyn SyncSignerBasic>) -> T,
+        f: impl FnOnce(ed25519_dalek::VerifyingKey, Box<dyn SyncSignerBasic + Send + Sync>) -> T,
     ) -> (T, ed25519_dalek::VerifyingKey) {
         let sk = ed25519_dalek::SigningKey::generate(csprng);
         let vk = sk.verifying_key();
