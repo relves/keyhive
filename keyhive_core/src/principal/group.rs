@@ -149,7 +149,7 @@ impl<S: AsyncSigner, T: ContentRef, L: MembershipListener<S, T>> Group<S, T, L> 
 
     #[tracing::instrument(skip_all)]
     pub(crate) async fn generate_after_content(
-        signer: Box<dyn SyncSignerBasic>,
+        signer: Box<dyn SyncSignerBasic + Send + Sync>,
         verifier: ed25519_dalek::VerifyingKey,
         parents: NonEmpty<Agent<S, T, L>>,
         delegations: Arc<Mutex<DelegationStore<S, T, L>>>,
